@@ -6,5 +6,5 @@ export default function FunnelReportPage() {
 }
 
 export const metadata: Metadata = {
-  title: 'Funnel Report | umami',
+  title: 'Funnel Report | UTD Analytics',
 };

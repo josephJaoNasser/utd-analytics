@@ -5,5 +5,5 @@ export default function () {
   return <UsersDataTable />;
 }
 export const metadata: Metadata = {
-  title: 'Users | umami',
+  title: 'Users | UTD Analytics',
 };

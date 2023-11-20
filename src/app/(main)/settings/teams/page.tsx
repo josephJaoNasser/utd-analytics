@@ -16,5 +16,5 @@ export default function () {
 }
 
 export const metadata: Metadata = {
-  title: 'Teams Settings | umami',
+  title: 'Teams Settings | UTD Analytics',
 };

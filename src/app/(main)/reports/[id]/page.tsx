@@ -10,5 +10,5 @@ export default function ReportDetailsPage({ params: { id } }) {
 }
 
 export const metadata: Metadata = {
-  title: 'Reports | umami',
+  title: 'Reports | UTD Analytics',
 };

@@ -12,5 +12,5 @@ export default function WebsitesPage() {
 }
 
 export const metadata: Metadata = {
-  title: 'Websites | umami',
+  title: 'Websites | UTD Analytics',
 };

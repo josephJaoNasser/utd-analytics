@@ -16,5 +16,5 @@ export default async function ({ params: { id } }) {
 }
 
 export const metadata: Metadata = {
-  title: 'Test Console | umami',
+  title: 'Test Console | UTD Analytics',
 };

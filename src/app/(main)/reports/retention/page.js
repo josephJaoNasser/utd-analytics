@@ -5,5 +5,5 @@ export default function RetentionReportPage() {
 }
 
 export const metadata = {
-  title: 'Create Report | umami',
+  title: 'Create Report | UTD Analytics',
 };

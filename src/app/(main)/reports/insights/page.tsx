@@ -6,5 +6,5 @@ export default function InsightsReportPage() {
 }
 
 export const metadata: Metadata = {
-  title: 'Insights Report | umami',
+  title: 'Insights Report | UTD Analytics',
 };

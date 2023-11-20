@@ -10,5 +10,5 @@ export default function ReportsPage() {
   );
 }
 export const metadata = {
-  title: 'Reports | umami',
+  title: 'Reports | UTD Analytics',
 };

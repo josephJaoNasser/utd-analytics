@@ -73,7 +73,9 @@ export function TestConsole({ websiteId }) {
   return (
     <Page loading={isLoading} error={error}>
       <Head>
-        <title>{website ? `${website.name} | Umami Console` : 'Umami Console'}</title>
+        <title>
+          {website ? `${website.name} | UTD Analytics Console` : 'UTD Analytics Console'}
+        </title>
       </Head>
       <PageHeader title="Test console">
         <WebsiteSelect websiteId={website?.id} onSelect={handleChange} />

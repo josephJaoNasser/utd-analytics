@@ -32,5 +32,5 @@ export default function RootLayout({ children }) {
 }
 
 export const metadata: Metadata = {
-  title: 'umami',
+  title: 'UTD Analytics',
 };
