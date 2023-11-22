@@ -207,3 +207,30 @@ export interface QueryOptions {
   joinSession?: boolean;
   columns?: { [key: string]: string };
 }
+
+export interface UTDUser {
+  id: number;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  googleLogin: any;
+  roleId: number;
+  timezone: string;
+  country: string;
+  accessRevoked: boolean;
+  isTourCompleted: boolean;
+  isVerified: boolean;
+  activationId: any;
+  lastActive: string;
+  avatar: string;
+  contactNumber: string;
+  birthday: string;
+  referrer: any;
+  detectedAccountId: any;
+  isPremiumUser: any;
+  about: any;
+  createdAt: string;
+  updatedAt: string;
+  Role: { name: string; description: string };
+}

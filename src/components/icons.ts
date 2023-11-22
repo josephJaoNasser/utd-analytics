@@ -21,6 +21,7 @@ import Sun from 'assets/sun.svg';
 import User from 'assets/user.svg';
 import Users from 'assets/users.svg';
 import Visitor from 'assets/visitor.svg';
+import Code from 'assets/code.svg';
 
 const icons: any = {
   ...Icons,
@@ -46,6 +47,7 @@ const icons: any = {
   User,
   Users,
   Visitor,
+  Code,
 };
 
 export default icons;

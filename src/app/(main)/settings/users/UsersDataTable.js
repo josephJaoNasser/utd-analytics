@@ -15,10 +15,16 @@ export function UsersDataTable() {
     });
   });
 
+  const handleChange = () => {
+    queryResult.refetch();
+  };
+
   return (
     <>
       <UsersHeader />
-      <DataTable queryResult={queryResult}>{({ data }) => <UsersTable data={data} />}</DataTable>
+      <DataTable queryResult={queryResult}>
+        {({ data }) => <UsersTable data={data} onRemove={handleChange} />}
+      </DataTable>
     </>
   );
 }

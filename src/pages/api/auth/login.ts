@@ -1,9 +1,9 @@
 import redis from '@umami/redis-client';
 import debug from 'debug';
 import { setAuthKey } from 'lib/auth';
-import { secret } from 'lib/crypto';
+import { secret, uuid } from 'lib/crypto';
 import { useValidate } from 'lib/middleware';
-import { NextApiRequestQueryBody, User } from 'lib/types';
+import { NextApiRequestQueryBody, UTDUser, User } from 'lib/types';
 import { NextApiResponse } from 'next';
 import {
   checkPassword,
@@ -13,7 +13,7 @@ import {
   ok,
   unauthorized,
 } from 'next-basics';
-import { getUserByUsername } from 'queries';
+import { createUser, getUserByUsername } from 'queries';
 import * as yup from 'yup';
 import { ROLES } from 'lib/constants';
 
@@ -29,12 +29,43 @@ export interface LoginResponse {
   user: User;
 }
 
+export interface UTDLoginResponse {
+  success: boolean;
+  message: string;
+  token: string;
+  error: any;
+  data: UTDUser;
+}
+
 const schema = {
   POST: yup.object().shape({
     username: yup.string().required(),
     password: yup.string().required(),
   }),
 };
+
+async function UTDLogin(email, password): Promise<UTDLoginResponse> {
+  const payload = {
+    email,
+    password,
+    keepMeSignedIn: true,
+    isOAuth: false,
+  };
+
+  const data = await fetch('https://www.uptodateconnect.com/api/v1/user/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(payload),
+  })
+    .then(res => {
+      if (res.ok) return res.json();
+    })
+    .catch(err => ({ success: false, error: err }));
+
+  return data;
+}
 
 export default async (
   req: NextApiRequestQueryBody<any, LoginRequestBody>,
@@ -49,7 +80,27 @@ export default async (
   if (req.method === 'POST') {
     const { username, password } = req.body;
 
-    const user = await getUserByUsername(username, { includePassword: true });
+    const utdUser = await UTDLogin(username, password);
+
+    if (!utdUser?.success) {
+      return unauthorized(res, 'message.incorrect-username-password');
+    }
+
+    let user = await getUserByUsername(username, { includePassword: true });
+
+    if (!user) {
+      const allowedRoles = [2, 11];
+      const newUserRole = allowedRoles.includes(utdUser.data.roleId) ? ROLES.admin : ROLES.user;
+
+      await createUser({
+        id: uuid(),
+        username,
+        password: utdUser.data.password,
+        role: newUserRole,
+      });
+
+      user = await getUserByUsername(username, { includePassword: true });
+    }
 
     if (user && checkPassword(password, user.password)) {
       if (redis) {

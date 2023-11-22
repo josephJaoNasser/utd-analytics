@@ -6,7 +6,7 @@ import useMessages from 'components/hooks/useMessages';
 import useLocale from 'components/hooks/useLocale';
 import UserDeleteButton from './UserDeleteButton';
 
-export function UsersTable({ data = [] }) {
+export function UsersTable({ data = [], onRemove = () => {} }) {
   const { formatMessage, labels } = useMessages();
   const { dateLocale } = useLocale();
   const breakpoint = useBreakpoint();
@@ -42,7 +42,7 @@ export function UsersTable({ data = [] }) {
                   <Text>{formatMessage(labels.edit)}</Text>
                 </Button>
               </Link>
-              <UserDeleteButton userId={id} username={username} />
+              <UserDeleteButton userId={id} username={username} onDelete={onRemove} />
             </>
           );
         }}

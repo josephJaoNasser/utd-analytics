@@ -22,13 +22,17 @@ export async function checkVersion() {
     headers: {
       Accept: 'application/json',
     },
-  }).then(res => {
-    if (res.ok) {
-      return res.json();
-    }
+  })
+    .then(res => {
+      if (res.ok) {
+        return res.json();
+      }
 
-    return null;
-  });
+      return null;
+    })
+    .catch(() => {
+      console.log('Failed to check version');
+    });
 
   if (!data) {
     return;
