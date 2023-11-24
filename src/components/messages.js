@@ -12,6 +12,7 @@ export const labels = defineMessages({
   createUser: { id: 'label.create-user', defaultMessage: 'Create user' },
   deleteUser: { id: 'label.delete-user', defaultMessage: 'Delete user' },
   username: { id: 'label.username', defaultMessage: 'Username' },
+  email: { id: 'label.email', defaultMessage: 'E-mail Address' },
   password: { id: 'label.password', defaultMessage: 'Password' },
   role: { id: 'label.role', defaultMessage: 'Role' },
   user: { id: 'label.user', defaultMessage: 'User' },
@@ -220,6 +221,10 @@ export const messages = defineMessages({
   minPasswordLength: {
     id: 'message.min-password-length',
     defaultMessage: 'Minimum length of {n} characters',
+  },
+  invalidEmailFormat: {
+    id: 'message.invalid-email-format',
+    defaultMessage: 'Invalid email format',
   },
   noTeams: {
     id: 'message.no-teams',

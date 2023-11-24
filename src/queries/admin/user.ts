@@ -21,6 +21,7 @@ async function getUser(
     select: {
       id: true,
       username: true,
+      email: true,
       password: includePassword,
       role: true,
       createdAt: true,
@@ -34,6 +35,10 @@ export async function getUserById(userId: string, options: GetUserOptions = {}) 
 
 export async function getUserByUsername(username: string, options: GetUserOptions = {}) {
   return getUser({ username }, options);
+}
+
+export async function getUserByEmail(email: string, options: GetUserOptions = {}) {
+  return getUser({ email }, options);
 }
 
 export async function getUsers(
@@ -111,11 +116,13 @@ export async function getUsersByTeamId(teamId: string, filter?: UserSearchFilter
 export async function createUser(data: {
   id: string;
   username: string;
+  email: string;
   password: string;
   role: Role;
 }): Promise<{
   id: string;
   username: string;
+  email: string;
   role: string;
 }> {
   return prisma.client.user.create({
@@ -123,6 +130,7 @@ export async function createUser(data: {
     select: {
       id: true,
       username: true,
+      email: true,
       role: true,
     },
   });
@@ -137,6 +145,7 @@ export async function updateUser(
     data,
     select: {
       id: true,
+      email: true,
       username: true,
       role: true,
       createdAt: true,

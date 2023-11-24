@@ -47,6 +47,20 @@ export function UserEditForm({ userId, data, onSave }) {
           <TextField />
         </FormInput>
       </FormRow>
+      <FormRow label={formatMessage(labels.email)}>
+        <FormInput
+          name="email"
+          rules={{
+            required: formatMessage(labels.required),
+            pattern: {
+              value: new RegExp(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g),
+              message: formatMessage(messages.invalidEmailFormat),
+            },
+          }}
+        >
+          <TextField type="email" />
+        </FormInput>
+      </FormRow>
       <FormRow label={formatMessage(labels.password)}>
         <FormInput
           name="password"

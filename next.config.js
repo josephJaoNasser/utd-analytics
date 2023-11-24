@@ -89,6 +89,7 @@ const config = {
     disableLogin: process.env.DISABLE_LOGIN,
     disableUI: process.env.DISABLE_UI,
     isProduction: process.env.NODE_ENV === 'production',
+    courierToken: process.env.COURIER_TOKEN || '',
   },
   basePath,
   output: 'standalone',

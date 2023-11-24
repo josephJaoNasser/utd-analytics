@@ -13,7 +13,7 @@ import {
   ok,
   unauthorized,
 } from 'next-basics';
-import { createUser, getUserByUsername } from 'queries';
+import { createUser, getUserByEmail, getUserByUsername } from 'queries';
 import * as yup from 'yup';
 import { ROLES } from 'lib/constants';
 
@@ -88,18 +88,24 @@ export default async (
 
     let user = await getUserByUsername(username, { includePassword: true });
 
+    if (!user) user = await getUserByEmail(username, { includePassword: true });
+
     if (!user) {
       const allowedRoles = [2, 11];
       const newUserRole = allowedRoles.includes(utdUser.data.roleId) ? ROLES.admin : ROLES.user;
+      const newUsername = utdUser.data.email.split('@')[0];
+
+      const hasDuplicateUsername = await getUserByUsername(newUsername);
 
       await createUser({
         id: uuid(),
-        username,
+        username: !hasDuplicateUsername ? newUsername : newUsername + utdUser.data.id,
+        email: utdUser.data.email,
         password: utdUser.data.password,
         role: newUserRole,
       });
 
-      user = await getUserByUsername(username, { includePassword: true });
+      user = await getUserByEmail(username, { includePassword: true });
     }
 
     if (user && checkPassword(password, user.password)) {
@@ -110,11 +116,11 @@ export default async (
       }
 
       const token = createSecureToken({ userId: user.id }, secret());
-      const { id, username, role, createdAt } = user;
+      const { id, username, role, createdAt, email } = user;
 
       return ok(res, {
         token,
-        user: { id, username, role, createdAt, isAdmin: role === ROLES.admin },
+        user: { id, username, role, email, createdAt, isAdmin: role === ROLES.admin },
       });
     }
 

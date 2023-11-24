@@ -18,7 +18,7 @@ export function ProfileSettings() {
     return null;
   }
 
-  const { username, role } = user;
+  const { username, email, role } = user;
 
   const renderRole = value => {
     if (value === ROLES.user) {
@@ -37,6 +37,7 @@ export function ProfileSettings() {
   return (
     <Form>
       <FormRow label={formatMessage(labels.username)}>{username}</FormRow>
+      <FormRow label={formatMessage(labels.email)}>{email}</FormRow>
       <FormRow label={formatMessage(labels.role)}>{renderRole(role)}</FormRow>
       {!cloudMode && (
         <FormRow label={formatMessage(labels.password)}>
