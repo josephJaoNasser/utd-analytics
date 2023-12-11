@@ -100,6 +100,7 @@ export interface NextApiRequestAuth extends NextApiRequest {
 
 export interface User {
   id: string;
+  utdId: string;
   email: string;
   username: string;
   password?: string;

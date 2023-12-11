@@ -20,6 +20,7 @@ async function getUser(
     where: { ...where, ...(showDeleted ? {} : { deletedAt: null }) },
     select: {
       id: true,
+      utdId: true,
       username: true,
       email: true,
       password: includePassword,
@@ -119,11 +120,13 @@ export async function createUser(data: {
   email: string;
   password: string;
   role: Role;
+  utdId: string;
 }): Promise<{
   id: string;
   username: string;
   email: string;
   role: string;
+  utdId: string;
 }> {
   return prisma.client.user.create({
     data,
@@ -132,6 +135,7 @@ export async function createUser(data: {
       username: true,
       email: true,
       role: true,
+      utdId: true,
     },
   });
 }
@@ -145,6 +149,7 @@ export async function updateUser(
     data,
     select: {
       id: true,
+      utdId: true,
       email: true,
       username: true,
       role: true,

@@ -16,6 +16,7 @@ import {
 import { createUser, getUserByEmail, getUserByUsername } from 'queries';
 import * as yup from 'yup';
 import { ROLES } from 'lib/constants';
+import CourierInstance from 'lib/CourierInstance';
 
 const log = debug('umami:auth');
 
@@ -90,6 +91,7 @@ export default async (
 
     if (!user) user = await getUserByEmail(username, { includePassword: true });
 
+    //  create user from utd account
     if (!user) {
       const allowedRoles = [2, 11];
       const newUserRole = allowedRoles.includes(utdUser.data.roleId) ? ROLES.admin : ROLES.user;
@@ -99,6 +101,7 @@ export default async (
 
       await createUser({
         id: uuid(),
+        utdId: utdUser.data.id.toString(),
         username: !hasDuplicateUsername ? newUsername : newUsername + utdUser.data.id,
         email: utdUser.data.email,
         password: utdUser.data.password,
@@ -114,6 +117,20 @@ export default async (
 
         return ok(res, { token, user });
       }
+
+      await CourierInstance.createUser({
+        utdId: user.utdId,
+        recipient_id: utdUser.data.id.toString(),
+        firstName: utdUser.data.firstName,
+        lastName: utdUser.data.lastName,
+        id: user.id,
+        email: user.email,
+        email_verified: true,
+        username: user.username,
+        picture: utdUser.data.avatar,
+        phone_number: utdUser.data.contactNumber,
+        zoneinfo: utdUser.data.timezone,
+      });
 
       const token = createSecureToken({ userId: user.id }, secret());
       const { id, username, role, createdAt, email } = user;
