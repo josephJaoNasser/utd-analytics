@@ -16,7 +16,7 @@ import {
 import { createUser, getUserByEmail, getUserByUsername } from 'queries';
 import * as yup from 'yup';
 import { ROLES } from 'lib/constants';
-import CourierInstance from 'lib/CourierInstance';
+import CourierInstance from 'lib/Courier/CourierInstance';
 
 const log = debug('umami:auth');
 
